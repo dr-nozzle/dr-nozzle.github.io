@@ -1,43 +1,45 @@
-# Chirpy Starter
+# FDNY Proby Study Guide Hub
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+Welcome to my collection of study resources and guides! This page will be updated as needed with new resources.  
+**Disclaimer:** I did not create these resources — this is just a collection.  
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+⚠️ Do not rely solely on the materials here. **Read the official manuals and take your own notes.**
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+## Study Guides
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+- **Study Guides**  
+  [Google Drive Folder](https://drive.google.com/drive/folders/1KdUjpUIhk5Xx2tN3zrHBtFJZqs7q0gqC?usp=share_link)  
+  *Note: Mostly just questions with answers.*
 
-```shell
-.
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
-```
+- **Extended Study Guides**  
+  [Google Drive Folder](https://drive.google.com/drive/folders/16lL_Vufx-rdeVvaPmDyo-TNibnBwXvw0?usp=sharing)  
+  *Note: True study guides with questions and answers at the end of each guide. The questions are the same or similar to the quiz guides above.*
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
 
-## Usage
+##  Quizlets
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+- **ProbieWanKenobi**  
+  [Quizlet Profile](https://quizlet.com/user/ProbieWanKenobi/sets)  
+  *Note: These sets are just the questions from the above study guides as flashcards.*
+  
+- **Dr-PRD**  
+  [Quizlet Profile](https://quizlet.com/user/Dr-PRD/sets)
 
-## Contributing
+- **Quiz 1-6**  
+  [Quiz 1-6 Quizlet](https://quizlet.com/1067795142/quiz-1-6-flash-cards/?i=6obvr0&x=1jqt)
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+- **Quiz 7-10**  
+  [Quiz 7-10 Quizlet](https://quizlet.com/1066906529/quiz-7-10-flash-cards/?i=6obvr0&x=1jqt)
 
-## License
+## Master List 
+- **Master list**
+  [link](https://docs.google.com/spreadsheets/d/1soK8JYdsaYyLJ7ANSUX7J71X6k1QErrZGS9keB799PU/edit?usp=sharing)
 
-This work is published under [MIT][mit] License.
+##  Runs and Workers 2024
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+- **Runs and Workers 2024 Map**
+  [GIS Map](https://www.arcgis.com/apps/mapviewer/index.html?webmap=f87ba8dda07646e5bbe9170fa66070bc&center=-73.938922%2C40.731277&level=11)
+
+
+
+![Page Views](https://hits.sh/dr-nozzle.github.io/FDNY-Study-Guides.svg)
