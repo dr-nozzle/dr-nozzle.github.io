@@ -20,7 +20,8 @@ order: 6
     <label>FST (20%)</label>
     <input id="fst" type="number" min="0" max="100" step="0.01">
 
-    <button id="calc" class="btn">Calculate</button>
+    <button id="calc" class="btn" type="button">Calculate</button>
+
 
     <p id="out" class="result"></p>
 
@@ -60,6 +61,11 @@ order: 6
   background: field;
 
   cursor: pointer;
+  text-align: center;
+
+  /* iOS friendliness */
+  -webkit-appearance: button;
+  touch-action: manipulation;
 }
 
 .gc .result {
@@ -145,7 +151,8 @@ document.getElementById("calc").addEventListener("click", () => {
     <label>Final</label>
     <input id="finalExam" type="number" min="0" max="100" step="0.01">
 
-    <button id="quizCalc" class="btn">Calculate</button>
+    <button id="quizCalc" class="btn" type="button">Calculate</button>
+
 
     <p id="quizOut" class="result"></p>
 
@@ -217,7 +224,8 @@ document.getElementById("quizCalc").addEventListener("click", () => {
     <input id="signed" type="number" min="0" max="100" step="1">
 
 
-    <button id="pstCalc" class="btn">Calculate</button>
+    <button id="pstCalc" class="btn" type="button">Calculate</button>
+
 
     <p id="pstOut" class="result"></p>
 
@@ -268,7 +276,8 @@ document.getElementById("pstCalc").addEventListener("click", () => {
     <label>FST Time (mm:ss)</label>
     <input id="fstTime" type="text" placeholder="e.g., 12:34">
 
-    <button id="fstCalc" class="btn">Calculate</button>
+    <button id="fstCalc" class="btn" type="button">Calculate</button>
+
 
     <p id="fstOut" class="result"></p>
 
