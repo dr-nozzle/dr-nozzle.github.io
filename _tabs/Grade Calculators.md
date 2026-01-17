@@ -75,31 +75,6 @@ order: 6
 }
 </style>
 
-<script>
-document.getElementById("calc").addEventListener("click", () => {
-
-  const a = parseFloat(acad.value);
-  const p = parseFloat(pst.value);
-  const f = parseFloat(fst.value);
-
-  const out = document.getElementById("out");
-
-  if ([a, p, f].some(isNaN)) {
-    out.textContent = "Please enter all three grades.";
-    return;
-  }
-
-  const final =
-      a * 0.50 +
-      p * 0.30 +
-      f * 0.20;
-
-  // TRUNCATE to 2 decimals (no rounding)
-  const truncated = Math.floor(final * 100) / 100;
-
-  out.textContent = "Final Grade = " + truncated;
-});
-</script>
 
 
 ## Quiz Grade Calculator 
@@ -160,54 +135,6 @@ document.getElementById("calc").addEventListener("click", () => {
 </div>
 
 
-<script>
-document.getElementById("quizCalc").addEventListener("click", () => {
-
-  const quizIds = ["q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12"];
-  const out = document.getElementById("quizOut");
-
-  let totalPoints = 0;
-  let totalWeights = 0;
-
-  // Process quizzes (weight = 1 each)
-  quizIds.forEach(id => {
-    const val = parseFloat(document.getElementById(id).value);
-
-    if (!Number.isNaN(val)) {
-      totalPoints += val * 1;
-      totalWeights += 1;
-    }
-  });
-
-  // MT (weight = 3)
-  const mt = parseFloat(document.getElementById("mt").value);
-  if (!Number.isNaN(mt)) {
-    totalPoints += mt * 3;
-    totalWeights += 3;
-  }
-
-  // Final (weight = 5)
-  const finalExam = parseFloat(document.getElementById("finalExam").value);
-  if (!Number.isNaN(finalExam)) {
-    totalPoints += finalExam * 5;
-    totalWeights += 5;
-  }
-
-  if (totalWeights === 0) {
-    out.textContent = "Enter at least one grade.";
-    return;
-  }
-
-  const grade = totalPoints / totalWeights;
-
-  // TRUNCATE to 2 decimals (no rounding)
-  const truncated = Math.floor(grade * 100) / 100;
-
-  out.textContent =
-    "Current Grade = " + truncated ;
-});
-</script>
-
 ## PST Grade Calculator 
 
 
@@ -232,39 +159,6 @@ document.getElementById("quizCalc").addEventListener("click", () => {
   </div>
 </div>
 
-<script>
-document.getElementById("pstCalc").addEventListener("click", () => {
-
-  const taken = parseInt(document.getElementById("taken").value);
-  const signed = parseInt(document.getElementById("signed").value);
-  const out = document.getElementById("pstOut");
-
-  if (Number.isNaN(taken) || Number.isNaN(signed)) {
-    out.textContent = "Please enter both values.";
-    return;
-  }
-
-  if (taken < 1 || taken > 100) {
-    return;
-  }
-
-  if (signed < 0 || signed > taken) {
-    out.textContent = "Fails cannot be more than PSTs taken.";
-    return;
-  }
-
-  const passed = taken - signed;
-  const percent = (passed / taken) * 100;
-
-  // TRUNCATE to 2 decimals (no rounding)
-  const truncated = Math.floor(percent * 100) / 100;
-
-  out.textContent =
-    "Current PST Grade = " + truncated + "%  (" +
-    passed + "/" + taken + " passed, " +
-    signed + " failed)";
-});
-</script>
 
 ## FST Grade Calculator 
 
@@ -289,69 +183,166 @@ document.getElementById("pstCalc").addEventListener("click", () => {
 </div>
 
 <script>
-function secToTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = String(sec % 60).padStart(2, "0");
-  return m + ":" + s;
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-document.getElementById("fstCalc").addEventListener("click", () => {
-  const out = document.getElementById("fstOut");
-  const raw = (document.getElementById("fstTime").value || "").trim();
+  // ---------- Final Grade ----------
+  const calcBtn = document.getElementById("calc");
+  if (calcBtn) {
+    calcBtn.addEventListener("click", () => {
+      const aEl = document.getElementById("acad");
+      const pEl = document.getElementById("pst");
+      const fEl = document.getElementById("fst");
+      const out = document.getElementById("out");
 
-  const m = raw.match(/^(\d{1,2}):([0-5]\d)$/);
-  if (!m) {
-    out.textContent = "Enter time in mm:ss format (example: 12:34).";
-    return;
+      const a = parseFloat(aEl?.value);
+      const p = parseFloat(pEl?.value);
+      const f = parseFloat(fEl?.value);
+
+      if ([a, p, f].some(v => Number.isNaN(v))) {
+        out.textContent = "Please enter all three grades.";
+        return;
+      }
+
+      const final = a * 0.50 + p * 0.30 + f * 0.20;
+
+      // TRUNCATE to 2 decimals (no rounding)
+      const truncated = Math.floor(final * 100) / 100;
+
+      out.textContent = "Final Grade = " + truncated;
+    });
   }
 
-  const minutes = parseInt(m[1], 10);
-  const seconds = parseInt(m[2], 10);
-  const t = minutes * 60 + seconds;
+  // ---------- Quiz Grade ----------
+  const quizBtn = document.getElementById("quizCalc");
+  if (quizBtn) {
+    quizBtn.addEventListener("click", () => {
+      const quizIds = ["q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12"];
+      const out = document.getElementById("quizOut");
 
-  const base = 9 * 60 + 10; // 9:10
-  const step = 14.7;          // 14 seconds per point
-  const passScore = 75;
+      let totalPoints = 0;
+      let totalWeights = 0;
 
-  let score;
-  if (t <= base) {
-    score = 100;
-  } else {
-    const pointsLost = Math.ceil((t - base) / step);
-    score = 100 - pointsLost;
+      quizIds.forEach(id => {
+        const val = parseFloat(document.getElementById(id)?.value);
+        if (!Number.isNaN(val)) {
+          totalPoints += val * 1;
+          totalWeights += 1;
+        }
+      });
+
+      const mt = parseFloat(document.getElementById("mt")?.value);
+      if (!Number.isNaN(mt)) { totalPoints += mt * 3; totalWeights += 3; }
+
+      const finalExam = parseFloat(document.getElementById("finalExam")?.value);
+      if (!Number.isNaN(finalExam)) { totalPoints += finalExam * 5; totalWeights += 5; }
+
+      if (totalWeights === 0) {
+        out.textContent = "Enter at least one grade.";
+        return;
+      }
+
+      const grade = totalPoints / totalWeights;
+
+      // TRUNCATE to 2 decimals (no rounding)
+      const truncated = Math.floor(grade * 100) / 100;
+
+      out.textContent = "Current Grade = " + truncated;
+    });
   }
 
-  if (score > 100) score = 100;
-  if (score < 0) score = 0;
+  // ---------- PST Grade ----------
+  const pstBtn = document.getElementById("pstCalc");
+  if (pstBtn) {
+    pstBtn.addEventListener("click", () => {
+      const taken = parseInt(document.getElementById("taken")?.value, 10);
+      const signed = parseInt(document.getElementById("signed")?.value, 10);
+      const out = document.getElementById("pstOut");
 
-  const status = score >= passScore ? "PASS" : "FAIL";
+      if (Number.isNaN(taken) || Number.isNaN(signed)) {
+        out.textContent = "Please enter both values.";
+        return;
+      }
 
-  // Time bracket for this score (whole seconds)
-  // For score S (<100): k = 100 - S (points lost)
-  // Condition: (k-1)*step < (t - base) <= k*step
-  // => base + (k-1)*step < t <= base + k*step
-  let bracket;
-  if (score === 100) {
-    bracket = secToTime(base) + " and faster";
-  } else if (score === 0) {
-    bracket = "slower than the 1-point bracket";
-  } else {
-    const k = 100 - score;
-    const lowerExclusive = base + (k - 1) * step;
-    const upperInclusive = base + k * step;
+      if (taken < 1 || taken > 100) return;
 
-    const minSec = Math.floor(lowerExclusive) + 1;
-    const maxSec = Math.floor(upperInclusive);
+      if (signed < 0 || signed > taken) {
+        out.textContent = "Fails cannot be more than PSTs taken.";
+        return;
+      }
 
-    bracket = secToTime(minSec) + " – " + secToTime(maxSec);
+      const passed = taken - signed;
+      const percent = (passed / taken) * 100;
+
+      // TRUNCATE to 2 decimals (no rounding)
+      const truncated = Math.floor(percent * 100) / 100;
+
+      out.textContent =
+        "Current PST Grade = " + truncated + "%  (" +
+        passed + "/" + taken + " passed, " +
+        signed + " failed)";
+    });
   }
 
-  // Passing time threshold for 75
-  // score = 75 => pointsLost = 25 => t <= base + 25*14
-  const passLatest = Math.floor(base + (100 - passScore) * step);
-  out.textContent =
-    "Score = " + score + " (" + status + ")\n" +
-    "Time bracket for this score: " + bracket + "\n" +
-    "Passing is 75 (≈ " + secToTime(passLatest) + " or faster).";
+  // ---------- FST Grade ----------
+  function secToTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = String(sec % 60).padStart(2, "0");
+    return m + ":" + s;
+  }
+
+  const fstBtn = document.getElementById("fstCalc");
+  if (fstBtn) {
+    fstBtn.addEventListener("click", () => {
+      const out = document.getElementById("fstOut");
+      const raw = (document.getElementById("fstTime")?.value || "").trim();
+
+      const m = raw.match(/^(\d{1,2}):([0-5]\d)$/);
+      if (!m) {
+        out.textContent = "Enter time in mm:ss format (example: 12:34).";
+        return;
+      }
+
+      const minutes = parseInt(m[1], 10);
+      const seconds = parseInt(m[2], 10);
+      const t = minutes * 60 + seconds;
+
+      const base = 9 * 60 + 10; // 9:10
+      const step = 14.7;        // estimate
+      const passScore = 75;
+
+      let score;
+      if (t <= base) score = 100;
+      else score = 100 - Math.ceil((t - base) / step);
+
+      if (score > 100) score = 100;
+      if (score < 0) score = 0;
+
+      const status = score >= passScore ? "PASS" : "FAIL";
+
+      let bracket;
+      if (score === 100) {
+        bracket = secToTime(base) + " and faster";
+      } else if (score === 0) {
+        bracket = "slower than the 1-point bracket";
+      } else {
+        const k = 100 - score;
+        const lowerExclusive = base + (k - 1) * step;
+        const upperInclusive = base + k * step;
+
+        const minSec = Math.floor(lowerExclusive) + 1;
+        const maxSec = Math.floor(upperInclusive);
+
+        bracket = secToTime(minSec) + " – " + secToTime(maxSec);
+      }
+
+      const passLatest = Math.floor(base + (100 - passScore) * step);
+
+      out.textContent =
+        "Score = " + score + " (" + status + ")\n" +
+        "Time bracket for this score: " + bracket + "\n" +
+        "Passing is 75 (≈ " + secToTime(passLatest) + " or faster).";
+    });
+  }
+
 });
 </script>
